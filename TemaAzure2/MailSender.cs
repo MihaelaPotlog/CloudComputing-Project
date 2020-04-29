@@ -2,10 +2,11 @@
 using System.Threading.Tasks;
 using SendGrid;
 using SendGrid.Helpers.Mail;
+using Microsoft.AspNetCore.SignalR;
 
 namespace TemaAzure2
 {
-	public class MailSender
+	public class MailSender:Hub
 	{
         static void sendMailTo(string email)
         {

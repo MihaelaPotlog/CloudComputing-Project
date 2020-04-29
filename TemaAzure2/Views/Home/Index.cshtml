@@ -5,17 +5,17 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <button onclick="sendEmails()">Send invitations</button>
+    <button id="sendButton">Send invitations</button>
 </div>
 
 <script>
-	function sendEmails() {
+/*	function sendEmails() {
 		fetch('https://restaurantedb.azurewebsites.net/api/HttpTrigger2')
 			.then(res => res.json())
 			.then(users => users.foreach(user => {
 				
 			}));
-	};
+	};*/
 
 	var connection = new signalR.HubConnectionBuilder().withUrl('/mail').build();
             bindConnectionMessage(connection);
@@ -25,5 +25,21 @@
                 })
                 .catch(function (error) {
                     console.error(error.message);
-                });
+				});
+
+   function bindConnectionMessage(connection) {
+				var messageCallback = function () {
+					window.alert("Invitation sent");
+                };
+                // Create a function that the hub can call to broadcast messages.
+                connection.on('sendMailTo', messageCallback);
+                
+                connection.onclose(onConnectionError);
+	}
+
+	function onConnected(connection) {
+		document.getElementById("sendButton").addEventListener("click", () => {
+			connection.send("sendMailTo", "mihaela.luca98@yahoo.com");
+		});
+	}
 </script>
