@@ -110,6 +110,7 @@ namespace TemaAzure2
             app.UseAzureSignalR(routes =>
             {
                 routes.MapHub<ChatHub>("/chat");
+                routes.MapHub<MailSender>("/mail");
                
             });
         }

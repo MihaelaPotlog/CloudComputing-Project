@@ -5,4 +5,25 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <button onclick="sendEmails()">Send invitations</button>
 </div>
+
+<script>
+	function sendEmails() {
+		fetch('https://restaurantedb.azurewebsites.net/api/HttpTrigger2')
+			.then(res => res.json())
+			.then(users => users.foreach(user => {
+				
+			}));
+	};
+
+	var connection = new signalR.HubConnectionBuilder().withUrl('/mail').build();
+            bindConnectionMessage(connection);
+            connection.start()
+                .then(function () {
+                    onConnected(connection);
+                })
+                .catch(function (error) {
+                    console.error(error.message);
+                });
+</script>
