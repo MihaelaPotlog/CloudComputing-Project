@@ -77,7 +77,7 @@
             }
 
             function bindConnectionMessage(connection) {
-                var messageCallback = function(name, message) {
+                var messageCallback = function(name, message, existsBadWords) {
                     if (!message) return;
                     // Html encode display name and message.
                     var encodedName = name;
@@ -86,7 +86,11 @@
 
                     var messageBox = document.getElementById('messages');
                     messageBox.appendChild(messageEntry);
-                    messageBox.scrollTop = messageBox.scrollHeight;
+					messageBox.scrollTop = messageBox.scrollHeight;
+
+					if (existsBadWords == true) {
+						window.alert("You shall not use this language!");
+					}
                 };
                 // Create a function that the hub can call to broadcast messages.
                 connection.on('broadcastMessage', messageCallback);

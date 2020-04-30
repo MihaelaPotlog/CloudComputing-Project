@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
+using TemaAzure2.Chat;
 
 namespace TemaAzure2
 {
@@ -10,7 +11,8 @@ namespace TemaAzure2
     {
         public void BroadcastMessage(string name, string message)
         {
-            Clients.All.SendAsync("broadcastMessage", name, message);
+            bool badWords = ContentModerate.ExistsBadWords(message);
+            Clients.All.SendAsync("broadcastMessage", name, message, badWords);
         }
 
         public void Echo(string name, string message)
