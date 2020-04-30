@@ -50,7 +50,8 @@
                 }
             } while(!username)
 
-            document.getElementById('message');
+            var userMail = document.getElementById('usermail');
+            username = userMail.innerHTML;
             // Set initial focus to message input box.
             var messageInput = document.getElementById('message');
             messageInput.focus();
