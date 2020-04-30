@@ -9,7 +9,13 @@
 </div>
 
 <script>
- 
+
+    function getEmails() {
+
+        return fetch('https://restaurantedb.azurewebsites.net/api/HttpTrigger2%27');
+
+
+    };
 
     var connection = new signalR.HubConnectionBuilder().withUrl('/mail').build();
     bindConnectionMessage(connection);
@@ -39,4 +45,28 @@
             connection.send("sendMailTo", "mihaela.luca98@yahoo.com");
         });
     }
+//
+//    function onConnected(connection) {
+//        var emails = [];
+//        getEmails().then(res => res.json())
+//            .then(jsonResponse => {
+//                console.log(jsonResponse);
+//                var  users = Object.keys(jsonResponse.message);
+//                users.foreach(user => {
+//                    console.log("user: ", user);
+//                    emails.push(user);
+//                });
+//            });
+
+//        emails.foreach(email => {
+//            console.log("email:", email)
+//            document.getElementById("sendButton").addEventListener("click", () => {
+//                connection.send("sendMailTo", email);
+//            });
+//        });
+//    };
+
+   
+
+    
 </script>
