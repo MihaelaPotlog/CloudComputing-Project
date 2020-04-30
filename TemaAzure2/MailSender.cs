@@ -8,18 +8,19 @@ namespace TemaAzure2
 {
 	public class MailSender:Hub
 	{
-        static void sendMailTo(string email)
+        public async Task sendMailTo(string email)
         {
-            Execute(email).Wait();
+            await Execute(email);
+            await Clients.Client(Context.ConnectionId).SendAsync("sendMailTo");
 
         }
 
 
-        static async Task Execute(string email)
+        public async Task Execute(string email)
         {
             Console.WriteLine("sending email...");
 
-            var apiKey = "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";
+            var apiKey = "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";
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {

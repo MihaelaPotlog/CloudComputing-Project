@@ -9,37 +9,34 @@
 </div>
 
 <script>
-/*	function sendEmails() {
-		fetch('https://restaurantedb.azurewebsites.net/api/HttpTrigger2')
-			.then(res => res.json())
-			.then(users => users.foreach(user => {
-				
-			}));
-	};*/
+ 
 
-	var connection = new signalR.HubConnectionBuilder().withUrl('/mail').build();
-            bindConnectionMessage(connection);
-            connection.start()
-                .then(function () {
-                    onConnected(connection);
-                })
-                .catch(function (error) {
-                    console.error(error.message);
-				});
+    var connection = new signalR.HubConnectionBuilder().withUrl('/mail').build();
+    bindConnectionMessage(connection);
+    connection.start()
+        .then(function () {
+            onConnected(connection);
+        })
+        .catch(function (error) {
+            console.error(error.message);
+        });
 
-   function bindConnectionMessage(connection) {
-				var messageCallback = function () {
-					window.alert("Invitation sent");
-                };
-                // Create a function that the hub can call to broadcast messages.
-                connection.on('sendMailTo', messageCallback);
-                
-                connection.onclose(onConnectionError);
-	}
+    function bindConnectionMessage(connection) {
+        var messageCallback = function () {
+            window.alert("Invitation sent");
+        };
+        // Create a function that the hub can call to broadcast messages.
+        connection.on('sendMailTo', messageCallback);
 
-	function onConnected(connection) {
-		document.getElementById("sendButton").addEventListener("click", () => {
-			connection.send("sendMailTo", "mihaela.luca98@yahoo.com");
-		});
-	}
+        connection.onclose(onConnectionError);
+    }
+    function onConnectionError(error) {
+
+        console.log("Eroare signalR");
+    }
+    function onConnected(connection) {
+        document.getElementById("sendButton").addEventListener("click", () => {
+            connection.send("sendMailTo", "mihaela.luca98@yahoo.com");
+        });
+    }
 </script>
