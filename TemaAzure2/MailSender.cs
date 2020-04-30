@@ -20,7 +20,7 @@ namespace TemaAzure2
         {
             Console.WriteLine("sending email...");
 
-            var apiKey = "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";
+            var apiKey = "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";
             var client = new SendGridClient(apiKey);
             var msg = new SendGridMessage()
             {

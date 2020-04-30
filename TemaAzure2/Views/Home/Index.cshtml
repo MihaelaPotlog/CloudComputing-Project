@@ -4,17 +4,14 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    
     <button id="sendButton">Send invitations</button>
 </div>
 
 <script>
 
     function getEmails() {
-
-        return fetch('https://restaurantedb.azurewebsites.net/api/HttpTrigger2%27');
-
-
+        return fetch('https://restaurantedb.azurewebsites.net/api/HttpTrigger2');
     };
 
     var connection = new signalR.HubConnectionBuilder().withUrl('/mail').build();
@@ -29,7 +26,7 @@
 
     function bindConnectionMessage(connection) {
         var messageCallback = function () {
-            window.alert("Invitation sent");
+            
         };
         // Create a function that the hub can call to broadcast messages.
         connection.on('sendMailTo', messageCallback);
@@ -40,33 +37,31 @@
 
         console.log("Eroare signalR");
     }
+
+
     function onConnected(connection) {
+        var emails = [];
+        getEmails().then(res => res.json())
+            .then(jsonResponse => {
+                console.log(jsonResponse);
+
+                jsonResponse.forEach(user => {
+                    console.log("user: ", user);
+                    emails.push(user.email);
+                });
+            });
         document.getElementById("sendButton").addEventListener("click", () => {
-            connection.send("sendMailTo", "mihaela.luca98@yahoo.com");
+            emails.forEach(email => {
+                console.log("email:", email);
+
+                connection.send("sendMailTo", email);
+            });
+            window.alert("Invitations have been sent!");
         });
-    }
-//
-//    function onConnected(connection) {
-//        var emails = [];
-//        getEmails().then(res => res.json())
-//            .then(jsonResponse => {
-//                console.log(jsonResponse);
-//                var  users = Object.keys(jsonResponse.message);
-//                users.foreach(user => {
-//                    console.log("user: ", user);
-//                    emails.push(user);
-//                });
-//            });
 
-//        emails.foreach(email => {
-//            console.log("email:", email)
-//            document.getElementById("sendButton").addEventListener("click", () => {
-//                connection.send("sendMailTo", email);
-//            });
-//        });
-//    };
+    };
 
-   
 
-    
+
+
 </script>

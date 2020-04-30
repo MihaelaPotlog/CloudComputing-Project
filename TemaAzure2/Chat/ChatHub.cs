@@ -12,12 +12,11 @@ namespace TemaAzure2
         public void BroadcastMessage(string name, string message)
         {
             bool badWords = ContentModerate.ExistsBadWords(message);
-            Clients.All.SendAsync("broadcastMessage", name, message, badWords);
+            if (badWords == true)
+                Clients.Client(Context.ConnectionId).SendAsync("badWords");
+            Clients.All.SendAsync("broadcastMessage", name, message);
         }
 
-        public void Echo(string name, string message)
-        {
-            Clients.Client(Context.ConnectionId).SendAsync("echo", name, message + " (echo from server)");
-        }
+        
     }
 }
